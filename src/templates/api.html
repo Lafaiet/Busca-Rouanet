@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+{% load static from staticfiles %}
+
+
+
+{% block navbar %}
+
+    {% include "nav.html" with active='' %}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<a class="github-fork-ribbon" href="https://github.com/culturagovbr/salic-api" title="Ver no GitHub">Fork me on GitHub</a>
+
+
+<h1 class="page-header">API</h1>
+
+    <div class="row placeholders">
+		<p class="text-left">
+			Esse site utiliza a API aberta do <strong>Novo Salic</strong> cuja documentação pode ser acessada <a href="http://lafa.mine.nu/salicapi/doc" target="_blank">aqui</a>
+		</p>
+
+</div>
+{% endblock %}

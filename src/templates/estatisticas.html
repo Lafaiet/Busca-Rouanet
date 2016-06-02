@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+
+{% block navbar %}
+
+    {% include "nav.html" with active='estatisticas' %}
+
+{% endblock %}
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-20 col-md-10 col-md-offset-2 main">
+
+<h1 class="page-header">Estatísticas</h1>
+
+
+<div id="exports"></div>
+
+<script>
+  // sample data array
+  var trade_data = [
+    {"usd": 34590873460, "product": "SP"},
+    {"usd": 12897429187, "product": "RJ"},
+    {"usd": 8974520985, "product": "RS "},
+    {"usd": 9872342, "product": "MG"},
+    {"usd": 6897234098, "product": "SC"},
+    {"usd": 590834587, "product": "DF"},
+    {"usd": 987234261, "product": "GO"}
+  ]
+  // instantiate d3plus
+  var visualization = d3plus.viz()
+    .container("#exports")
+    .data(trade_data)
+    .type("tree_map")
+    .id("product")
+    .size("usd")
+    .labels({"align": "left", "valign": "top"})
+    .draw()
+</script>
+
+
+<div id="viz"></div>
+
+<script>
+
+  var data = [
+    {"value": 100, "name": "Danca"},
+    {"value": 70, "name": "Teatro"},
+    {"value": 40, "name": "Musica"},
+    {"value": 15, "name": "Poesia"},
+    {"value": 5, "name": "Livro"},
+    {"value": 1, "name": "Show"}
+  ]
+
+  d3plus.viz()
+    .container("#viz")
+    .data(data)
+    .type("pie")
+    .id("name")
+    .size("value")
+    .draw()
+
+</script>
+
+
+
+</div>
+
+        
+{% endblock %}

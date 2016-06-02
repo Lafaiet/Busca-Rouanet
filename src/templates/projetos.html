@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+
+
+{% block navbar %}
+
+    {% include "nav.html" with active='projetos' %}
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h1 class="page-header">Projetos</h1>
+
+
+    <form method="POST" >
+
+    <div class="row placeholders">
+
+        {% crispy searchForm %}
+
+    </div>
+
+    <button type="submit" class="btn btn-primary" name="submit" value="Submit"> 
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
+    </button>
+
+    <button type="submit" class="btn btn-info" name="reset" value="Reset"> 
+          <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Resetar Busca
+    </button>
+
+     </form>
+
+
+    <div class="row placeholders">
+
+      <p></p>
+        {% render_table table "custom_table.html" %}
+
+        {% include "download_section.html" with link=link %}
+    </div>
+
+</div>
+    
+{% endblock %}

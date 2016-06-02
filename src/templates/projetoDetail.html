@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+
+
+{% block navbar %}
+
+    {% include "nav.html" with active='projetos' %}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+<h1 class="page-header">Projetos</h1>
+
+    <div class="row placeholders">
+         <h3> Detalhes </h3>
+
+         {% include "detail_table.html" with projeto=projeto %}
+
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h1 class="panel-title">Resumo</h1>
+            </div>
+            <div class="panel-body">{{ projeto.resumo }}</div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Providência</h1>
+            </div>
+            <div class="panel-body">{{ projeto.providencia }}</div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Acessibilidade</h1>
+            </div>
+            <div class="panel-body">
+            {% autoescape off %}
+            {{ projeto.acessibilidade }}
+            {% endautoescape %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Democratização</h1>
+            </div>
+            <div class="panel-body">
+                {% autoescape off %}
+                    {{ projeto.democratizacao }}
+                {% endautoescape %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Objetivos</h1>
+            </div>
+            <div class="panel-body">
+                {% autoescape off %}
+                 {{ projeto.objetivos }}
+                {% endautoescape %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Etapa</h1>
+            </div>
+            <div class="panel-body">
+                {% autoescape off %}
+                    {{ projeto.etapa }}
+                {% endautoescape %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Justificativa</h1>
+            </div>
+            <div class="panel-body">
+                {% autoescape off %}
+                    {{ projeto.justificativa }}
+                {% endautoescape %}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Ficha Técnica</h1>
+            </div>
+            <div class="panel-body">
+                {% autoescape off %}
+                    {{ projeto.ficha_tecnica }}
+                {% endautoescape %}
+            </div>
+        </div>
+       
+
+
+    </div>
+</div>
+{% endblock %}

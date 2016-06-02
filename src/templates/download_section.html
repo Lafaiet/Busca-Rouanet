@@ -1,0 +1,20 @@
+{% load static from staticfiles %}
+
+<div class="container-fluid">
+</div>
+    <div class="row placeholders">
+        Fazer download como  :  
+        <a href={{ link }}?format=csv>
+          <img border="0" alt="CSV Download" src='{% static 'img/28978.svg'%}', width="40" height="40">
+        </a>
+        <a href={{ link }}?format=pdf>
+          <img border="0" alt="PDF Download" src='{% static 'img/29153.svg'%}', width="40" height="40">
+        </a>
+        <a href={{ link }}?format=xls>
+          <img border="0" alt="XLS Download" src='{% static 'img/1396.svg'%}', width="40" height="40">
+        </a>
+        <a href={{ link }}?format=xml>
+          <img border="0" alt="XML Download" src='{% static 'img/29182.svg'%}', width="40" height="40">
+        </a>
+</div>
+</div>

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+
+
+{% block navbar %}
+
+    {% include "nav.html" with active='proponentes' %}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+<h1 class="page-header">Proponentes</h1>
+
+    <div class="row placeholders">
+         <h3> Detalhes </h3>
+
+         <h3> Projetos Apresentados</h3>
+
+         {% render_table projetos_table "custom_table.html" %}
+
+    </div>
+</div>
+{% endblock %}

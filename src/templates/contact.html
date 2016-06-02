@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+
+
+
+{% block navbar %}
+
+    {% include "nav.html" with active='' %}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h1 class="page-header">Contato</h1>
+
+    
+        <div class="row placeholders">
+                <form id="contact-form" method="post">
+                {% csrf_token %}
+
+    <div class="messages"></div>
+
+    <div class="controls">
+
+        <div class="row">
+            <div class="col-md-6">
+                <label for="form_name">Nome *</label>
+                <input id="form_name" type="text" name="name" class="form-control" placeholder="Por favor, entre com seu nome *" required="required">
+            </div>
+            <div class="col-md-6">
+                <label for="form_lastname">Sobrenome *</label>
+                <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Por favor, entre com seu sobrenome *" required="required">
+            </div>
+            <div class="col-md-6">
+                <label for="form_email">Email *</label>
+                <input id="form_email" type="email" name="email" class="form-control" placeholder="Por favor, entre com seu email *" required="required">
+            </div>
+            <div class="col-md-6">
+                <label for="form_phone">Telefone</label>
+                <input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Por favor, entre com seu telefone ">
+            </div>
+            <div class="col-md-12">
+                <label for="form_message">Mensagem *</label>
+                <textarea id="form_message" name="message" class="form-control" placeholder="Escreva sua mensagem *" rows="4" required="required"></textarea>
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success"> 
+                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Enviar mensagem
+                </button>
+            </div>
+            <div class="col-md-12">
+                <p class="text-muted"><strong>*</strong> Campos obrigatórios.</p>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+        </div>   
+
+    
+{% endblock %}

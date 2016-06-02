@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+
+
+{% block head%}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock%}
+
+
+{% block navbar %}
+
+    {% include "nav.html" with active='' %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h1 class="page-header">Contato</h1>
+
+
+{% if success == 'True' %}
+<div class="bs-example">
+    <div class="alert alert-success fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Sucesso!</strong> Sua mensagem foi enviada com sucesso.
+    </div>
+</div>
+
+{% elif success == 'False'%}
+<div class="bs-example">
+    <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Problema!</strong> Sua mensagem não foi enviada :(
+    </div>
+</div>
+{% endif %}
+
+{% if captcha == 'False' %}
+<div class="bs-example">
+    <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Problema!</strong> Sua mensagem não foi enviada :(
+    </div>
+</div>
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong> Cuidado! </strong> Códico CAPTCHA incorreto! Tente novamente.
+    </div>
+</div>
+{% endif %}
+
+
+
+<div id="contact_form" class="row">
+      <div class="col-12 col-sm-12 col-lg-12">
+
+        <p>Nós apreciamos seu feedback quanto ao uso da ferramenta. Nos ajude a fazê-la ainda melhor! Em caso de dúvidas ou sugestões, preencha os campos abaixo que entraremos em contato em breve.</p>
+
+        <form id="contact-form" method="post">
+                {% csrf_token %}
+
+          <div class="form-group">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nome*" required="required">
+            <span class="help-block" style="display: none;">Entre com seu nome</span>
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email*" required="required">
+            <span class="help-block" style="display: none;">Entre com seu email</span>
+          </div>
+          <div class="form-group">
+            <textarea rows="10" cols="100" class="form-control" id="message" name="message" placeholder="Mensagem*" required="required"></textarea>
+            <span class="help-block" style="display: none;">Entre com sua mensagem.</span>
+          </div>
+
+          * Campos obrigatórios.
+
+          <div class="form-group">
+          <div class="g-recaptcha" data-sitekey="6LdOHh8TAAAAAAA_6waZmc5o5ajE842CZhoBudbc"></div>
+          </div>
+
+          <button type="submit"  class="btn btn-primary btn-lg" style="display: block; margin-top: 10px;">
+            <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Enviar mensagem</button>
+
+
+        </form>
+      </div><!--/span-->
+</div><!--/row-->
+
+
+</div>
+
+
+    
+{% endblock %}

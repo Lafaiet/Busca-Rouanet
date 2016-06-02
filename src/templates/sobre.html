@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+{% load static from staticfiles %}
+
+
+
+{% block navbar %}
+
+    {% include "nav.html" with active='' %}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+<h1 class="page-header">Sobre</h1>
+
+    <div class="row placeholders">
+
+
+<h2> O projeto </h2>
+<p class="text-left">
+        Esse é mais um projeto desenvolvido no âmbito do Laboratório de Dados Abertos do curso de Gestão da Informação da Universidade Federal de Goiás, <a href="http://www.gi.fic.ufg.br/lda/#" target="_blank">LDA</a>, em parceria com o Ministério da Cultura, <a href="http://cultura.gov.br/" target="_blank">Minc</a>.
+</p>
+   
+
+<h2> A lei Rouanet </h2>
+
+
+    <p class="text-left">
+	    O mecanismo de incentivos fiscais da Lei Rouanet é uma forma de estimular o apoio da iniciativa privada ao setor cultural. Ou
+	    seja, o Governo abre mão de parte dos impostos (que recebe de pessoas físicas ou jurídicas), para que esses valores sejam investidos em projetos culturais que ajudam a mudar e até transformar o cenário da comunidade.
+    </p>
+
+	 <p class="text-left">
+		O proponente apresenta uma proposta cultural ao Ministério da Cultura (MinC) e, depois de aprovada a proposta, o proponente é autorizado a captar recursos junto a pessoas físicas pagadoras de Imposto de Renda (IR), que apresentam declaração completa, ou empresas tributadas com base no lucro real visando a execução do projeto.
+	 </p>
+
+	<p class="text-left">
+		Os agentes incentivadores que apoiarem o projeto poderão ter o total do valor desembolsado deduzido do imposto devido (artigo 18), dentro dos percentuais permitidos pela legislação tributária. 
+		Empresas, até 4% do imposto devido; 
+		Pessoas físicas, até 6% do imposto devido.
+	</p>
+
+	<p class="text-left">
+		O incentivo não altera o valor a pagar ou a restituir do seu Imposto de Renda, apenas redireciona parte do imposto para o projeto escolhido, contribuindo para a cultura e promovendo o desenvolvimento do cidadão.
+	</p>
+
+    <br>
+    <br>
+
+     <div class="row placeholders">
+        <a href="http://www.cultura.gov.br/" target="_blank">
+        <img border="0" alt="fic" src='{% static 'img/Marca-Brasil-e-MinC.jpg'%}', width="350" height="90">
+        </a>
+
+        <a href="http://www.fic.ufg.br/" target="_blank">
+        <img border="0" alt="fic" src='{% static 'img/FIC_logo-300x142.png'%}', width="280" height="100">
+        </a>
+
+        <a href="http://www.ufg.br/" target="_blank">
+        <img border="0" alt="ufg" src='{% static 'img/Logo_-_Marca_na_Horizontal_01-300x177.jpg'%}', width="200" height="100">
+        </a>
+
+    </div>
+
+</div>
+{% endblock %}
