@@ -1,11 +1,13 @@
 # Busca Rouanet
+[![HitCount](https://hitt.herokuapp.com/Lafaiet/Busca-Rouanet.svg)](https://github.com/{username||org}/{project-name})
  [![Gitter](https://badges.gitter.im/Lafaiet/Busca-Rouanet.svg)](https://gitter.im/Lafaiet/Busca-Rouanet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![GitHub version](https://badge.fury.io/gh/Lafaiet%2FBusca-Rouanet.svg)](https://badge.fury.io/gh/Lafaiet%2FBusca-Rouanet)
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)    
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Lafaiet/Busca-Rouanet/issues)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+
 
 Portal para buscas de dados referentes a Lei Rouanet.
 Esse portal serve como alternativa ao já existente [SALIC](http://novosalic.cultura.gov.br/cidadao/consultar).
-A ideia é fazer uso da [API](https://github.com/Lafaiet/salicapi) do SALIC (ainda em desenvolvimento) para compor uma base de dados local e prover acesso de forma mais direta, fácil e intuitiva.
+A ideia é fazer uso da [API](https://github.com/Lafaiet/salicapi) do SALIC (ainda em desenvolvimento) para compor uma base de dados local e prover acesso de forma mais direta, fácil e intuitiva. Trata-se de um projeto **independente**, sem vinculação direta com órgãos governamentais.
 
 ## Execução
 
