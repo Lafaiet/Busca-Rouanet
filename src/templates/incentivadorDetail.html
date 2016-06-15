@@ -3,6 +3,11 @@
 {% load crispy_forms_tags %}
 
 
+{% block head %}
+  {% include "boottable_head.html" %}
+{% endblock%}
+
+
 {% block navbar %}
 
     {% include "nav.html" with active='incentivadores' %}
@@ -18,19 +23,15 @@
     <div class="row placeholders">
          <h3> Detalhes </h3>
 
-         ...
+         Coming soon...
 
          <h3> Projetos Financiados</h3>
 
-         {% render_table projeto_table "custom_table.html" %}
-
+         {% include "boottable.html" with table=projeto_table %}
 
          <h3> Doações feitas </h3>
 
-         {% render_table doacao_table "custom_table.html" %}
-
-         
-       
+         {% include "boottable.html" with table=doacao_table %}
 
 
     </div>

@@ -2,10 +2,10 @@
 
 from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponseNotFound
+from django.http import Http404, HttpResponseNotFound, HttpResponse
 from django.template import RequestContext
+from django.core import serializers
 from models import Projeto, Proponente, Incentivador
-from tables import ProjetoTable, ProponenteTable, IncentivadorTable, DoacaoTable
 from forms import ProjetoForm, ContactForm, ProponenteForm, IncentivadorForm
 from django_tables2 import RequestConfig
 import requests
@@ -15,6 +15,9 @@ from api_handler import get_item
 from django.core.mail import send_mail
 from django.utils.encoding import uri_to_iri
 from django.conf import settings
+from boottable import ProjetoTable, IncentivadorTable, ProponenteTable, DoacaoTable, CaptacaoTable
+import json
+import simplejson
 
 
 
@@ -90,29 +93,20 @@ def projetosSearch(request):
         query_params = request.META['QUERY_STRING'].split('&')
         #   print 'Query params : ' + str(query_params)
 
+        exclusion_fields = ['format', 'page', 'sort', 'captacao', 'conclusao', 'limit', 'offset', 'order']
         for param in query_params:
             if param != '':
                 k, v = param.split('=')
                 form_initial[k] = uri_to_iri(v)
-                if k != 'page'  and k != 'sort' and k != 'captacao'  and k != 'conclusao':
+                if k not in exclusion_fields:
                     filter_args[k] = v
 
         #print 'filter_args : ' + str(filter_args)
 
+    table = ProjetoTable()
+    table.data_url+=link_args
 
-    projetos = Projeto.objects.filter(**filter_args).order_by('PRONAC').reverse()
-
-        #projetos = Projeto.objects.filter(**filter_args)
-
-
-    table = ProjetoTable(projetos)
-    table.link_args = link_args
-    table.data.verbose_name_plural = 'Projetos'
-    table.data.verbose_name = 'Projeto'
-    RequestConfig(request, paginate={"per_page": 10}).configure(table)
-    #print 'Form initial: '+str(form_initial)
-    return render(request, 'projetos.html', {'table': table, 'searchForm' : ProjetoForm(initial=form_initial),
-        "link" : "/projetos/"})
+    return render(request, 'projetos.html', {'table' : table, 'searchForm' : ProjetoForm(initial=form_initial)})
 
 
 def proponenteView(request):
@@ -158,16 +152,19 @@ def proponenteView(request):
 
         #print 'filter_args : ' + str(filter_args)
 
-    proponentes = Proponente.objects.filter(**filter_args)
+    table = ProponenteTable()
+    table.data_url+=link_args
 
-    table = ProponenteTable(proponentes)
-    table.link_args = link_args
-    table.data.verbose_name_plural = 'Proponentes'
-    table.data.verbose_name = 'Proponente'
-    RequestConfig(request, paginate={"per_page": 10}).configure(table)
+    return render(request, 'proponente.html', {'table' : table, 'searchForm' : ProponenteForm(form_initial)})
 
-    return render(request, 'proponente.html', {'table' : table, "link" : "/proponentes/", 'searchForm' : ProponenteForm(form_initial)})
+def proponenteDetail(request, cgccpf):
 
+    table = ProjetoTable()
+    table.data_url+='cgccpf='+str(cgccpf)
+
+    proponente = Proponente.objects.filter(cgccpf=cgccpf)[0]
+
+    return render(request, 'proponenteDetail.html', {"proponente" : proponente, 'table' : table})
 
 def incentivadorView(request):
 
@@ -211,24 +208,33 @@ def incentivadorView(request):
                 if k != 'page'  and k != 'sort' and k != 'captacao'  and k != 'conclusao':
                     filter_args[k] = v
 
-        #print 'filter_args : ' + str(filter_args)
+    table = IncentivadorTable()
+    table.data_url+=link_args
 
-    incentivadores = Incentivador.objects.filter(**filter_args)
+    return render(request, 'incentivador.html', {'table' : table, 'searchForm' : IncentivadorForm(form_initial)})
 
 
-    table = IncentivadorTable(incentivadores)
-    table.link_args = link_args
-    table.data.verbose_name_plural = 'Incentivadores'
-    table.data.verbose_name = 'Incentivador'
-    RequestConfig(request, paginate={"per_page": 10}).configure(table)
+def incentivadorDetail(request, cgccpf):
 
-    return render(request, 'incentivador.html', {'table' : table, "link" : "/incentivadores/", 'searchForm' : IncentivadorForm(form_initial)})
+    incentivador = Incentivador.objects.filter(cgccpf=cgccpf)[0]
+
+    incentivador_filter='incentivador=%s'%(str(cgccpf))
+    doacoes_filter = "cgccpf=%s"%(str(cgccpf))
+
+    projeto_table = ProjetoTable()
+    projeto_table.data_url+=incentivador_filter
+
+    doacao_table = DoacaoTable()
+    doacao_table.data_url+=doacoes_filter
+
+
+    return render(request, 'incentivadorDetail.html', {"incentivador" : incentivador,
+     "projeto_table" : projeto_table, "doacao_table" : doacao_table})
 
 
 def estatisticasView(request):
 
     return render(request, 'estatisticas.html', {})
-
 
 
 #@login_required()
@@ -247,42 +253,6 @@ def projetosDetail(request, PRONAC):
     #raise Http404 if None
 
     return render(request, 'projetoDetail.html', { "projeto" : projeto})
-
-def proponenteDetail(request, cgccpf):
-
-    projetos = Projeto.objects.filter(cgccpf=cgccpf)
-    table = ProjetoTable(projetos)
-    table.data.verbose_name_plural = 'Projetos'
-    table.data.verbose_name = 'Projeto'
-    RequestConfig(request, paginate={"per_page": 10}).configure(table)
-
-    proponente = Proponente.objects.filter(cgccpf=cgccpf)[0]
-
-    return render(request, 'proponenteDetail.html', {"proponente" : proponente, "projetos_table" : table})
-
-def incentivadorDetail(request, cgccpf):
-
-    incentivador = Incentivador.objects.filter(cgccpf=cgccpf)[0]
-    doacoes = incentivador.doacao_set.all()
-
-    projetos = []
-
-    for doacao in doacoes:
-        projetos.append(doacao.projeto_related)
-
-    projetos = set(projetos)
-
-    projeto_table = ProjetoTable(projetos, prefix='projetos_')
-    projeto_table.data.verbose_name_plural = 'Projetos'
-    projeto_table.data.verbose_name = 'Projeto'
-    RequestConfig(request, paginate={"per_page": 10}).configure(projeto_table)
-
-    doacao_table = DoacaoTable(doacoes, prefix='doacoes_')
-    doacao_table.data.verbose_name_plural = u'Doações'
-    doacao_table.data.verbose_name = u'Doação'
-    RequestConfig(request, paginate={"per_page": 10}).configure(doacao_table)
-
-    return render(request, 'incentivadorDetail.html', {"doacao_table" : doacao_table, "projeto_table" : projeto_table})
 
 
 def contactView(request):
@@ -319,6 +289,12 @@ def contactView(request):
 
     return render(request, 'contact_2.html', {'form' : ContactForm(), })
 
+
+def test(request):
+
+    table = ProjetoTable2()
+
+    return render(request, 'test.html', {'table' : table})
 
 def handler404(request):
     response = render_to_response('404_custom.html', {},

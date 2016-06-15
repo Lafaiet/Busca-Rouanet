@@ -3,10 +3,13 @@
 {% load crispy_forms_tags %}
 
 
+
+{% block head %}
+  {% include "boottable_head.html" %}
+{% endblock%}
+
 {% block navbar %}
-
     {% include "nav.html" with active='proponentes' %}
-
 {% endblock %}
 
 
@@ -20,7 +23,7 @@
 
          <h3> Projetos Apresentados</h3>
 
-         {% render_table projetos_table "custom_table.html" %}
+         {% include "boottable.html" with table=table %}
 
     </div>
 </div>

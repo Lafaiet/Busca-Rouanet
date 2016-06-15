@@ -14,6 +14,10 @@ class Doacao(models.Model):
 	projeto_related  = 	models.ForeignKey('Projeto', on_delete=models.CASCADE)
 	incentivador_related  = models.ForeignKey('Incentivador', on_delete=models.CASCADE)
 
+	basic_fields = [
+		'nome_projeto', 'nome_doador', 'cgccpf', 'valor', 'data_recibo', 'PRONAC'
+	]
+
 
 	def __unicode__(self):
 		return '%s' % self.PRONAC+':'+self.cgccpf
@@ -41,6 +45,11 @@ class Projeto(models.Model):
 	valor_solicitado = models.DecimalField(max_digits=20, decimal_places=2)
 	valor_aprovado = models.DecimalField(max_digits=20, decimal_places=2)
 
+	basic_fields = ['PRONAC', 'nome', 'situacao', 'segmento', 'area', 'cgccpf',
+	'proponente', 'mecanismo', 'enquadramento', 'UF', 'municipio', 'data_inicio',
+	'ano_projeto', 'data_termino', 'valor_projeto', 'outras_fontes', 'valor_captado',
+	 'valor_proposta', 'valor_solicitado', 'valor_aprovado']
+
 	etapa = models.TextField(null=True)
 	providencia = models.TextField(null=True)
 	objetivos = models.TextField(null=True)
@@ -66,13 +75,15 @@ class Projeto(models.Model):
 
 
 class Interessado(models.Model):
-	
+
 	cgccpf = models.CharField(max_length=20, primary_key=True)
 	nome = models.CharField(max_length=300)
 	responsavel = models.CharField(null=True, max_length=150)
 	UF = models.CharField(max_length=2)
 	municipio = models.CharField(max_length=100)
 	tipo_pessoa = models.CharField(max_length=20)
+
+	basic_fields = ['cgccpf', 'nome', 'responsavel', 'UF', 'municipio', 'tipo_pessoa']
 
 	def __unicode__(self):
 		return '%s' % self.cgccpf
@@ -81,9 +92,11 @@ class Interessado(models.Model):
 		return '/%s/' % self.cgccpf
 
 class Proponente(Interessado):
-	
+
 	quantidade_projetos = models.IntegerField()
 
 class Incentivador(Interessado):
-	
+
 	total_doado	 = models.DecimalField(max_digits=20, decimal_places=2)
+	basic_fields = Interessado.basic_fields+['total_doado']
+	projetos  = models.ManyToManyField('Projeto', blank=True)

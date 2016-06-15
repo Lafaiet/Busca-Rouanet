@@ -1,0 +1,71 @@
+
+      <div class="row placeholders">
+
+        <div id="toolbar">
+            <select class="form-control">
+                <option value="">Exportação Básica</option>
+                <option value="all">Exportar Tudo</option>
+                <option value="selected">Exportar Selecionados</option>
+            </select>
+        </div>
+
+        <table id="{{table.table_id}}"
+               data-toggle= {{ table.toggle }}
+               data-locale= {{ table.locale }}
+               data-toolbar= {{ table.toolbar }}
+               data-url= {{ table.data_url }}
+               data-show-refresh= {{ table.show_refresh }}
+               data-click-to-select= {{ table.click_to_select }}
+               data-show-columns= {{ table.show_columns }}
+               data-show-export= {{ table.show_export }}
+               data-export-types="['json', 'xml', 'csv', 'txt', 'sql', 'excel']"
+               data-height= {{ table.height }}
+               data-width= {{ table.width }}
+               data-side-pagination= {{ table.side_pagination }}
+               data-pagination= {{ table.pagination }}
+               data-page-list= "[5, 10, 20, 50, 100]" >
+            <thead>
+            <tr>
+              <th data-field="state" data-checkbox="true"></th>
+
+              {% for field in table.column_fields %}
+
+                {% if field.is_linkable %}
+                  <th data-field={{ field.name }} data-sortable="true" data-formatter="LinkFormatter">{{ field.verbose_name }}</th>
+                {% elif field.isReal %}
+                  <th data-field={{ field.name }} data-sortable="true" data-formatter="FormatReal">{{ field.verbose_name }}</th>
+                {% else %}
+                  <th data-field={{ field.name }} data-sortable="true">{{ field.verbose_name }}</th>
+                {% endif %}
+
+              {% endfor %}
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+<script>
+    var $table = $('#{{table.table_id}}');
+    $(function () {
+        $('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('destroy').bootstrapTable({
+                exportDataType: $(this).val()
+            });
+        });
+    })
+
+    function LinkFormatter(value, row) {
+       return "<a href='{{table.link_url}}"+value+"'>"+value+"</a>";
+       }
+
+     function numeroParaMoeda(n, c, d, t)
+      {
+          c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+          return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+      }
+
+      function FormatReal(value) {
+        return numeroParaMoeda(value);
+      }
+
+</script>

@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django_tables2',
     'bootstrap3',
     'django_crontab',
+    'restapi',
+    'rest_framework',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -134,7 +136,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "search/static"),
+    os.path.join(BASE_DIR, "busca_rouanet/static"),
 ]
 
 

@@ -2,6 +2,13 @@
 {% load render_table from django_tables2 %}
 {% load crispy_forms_tags %}
 
+
+{% block head%}
+<script src="http://www.d3plus.org/js/d3.js"></script>
+<script src="http://www.d3plus.org/js/d3plus.js"></script>
+{% endblock %}
+
+
 {% block navbar %}
 
     {% include "nav.html" with active='estatisticas' %}
@@ -66,5 +73,5 @@
 
 </div>
 
-        
+
 {% endblock %}

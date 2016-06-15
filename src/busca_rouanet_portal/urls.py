@@ -23,6 +23,10 @@ from django.conf.urls import include, url
 from busca_rouanet import views as rouanet_views
 from busca_rouanet import forms as rouanet_forms
 
+from restapi import views as restapi_views
+from rest_framework.urlpatterns import format_suffix_patterns
+
+
 from django.conf.urls import (
 handler400, handler403, handler404, handler500
 )
@@ -43,6 +47,7 @@ urlpatterns = [
     url(r'^incentivadores/$', rouanet_views.incentivadorView, name='incentivadores'),
     url(r'^incentivadores/(?P<cgccpf>\d+)/$', rouanet_views.incentivadorDetail, name='incentivadorDetail'),
     url(r'^estatisticas/$', rouanet_views.estatisticasView, name='estatisticas'),
+    url(r'^boottable/$', rouanet_views.test, name= 'table' ),
     url(r'^api/$', rouanet_views.apiView, name='api'),
     url(r'^sobre/$', rouanet_views.sobreView, name='sobre'),
 
@@ -50,6 +55,15 @@ urlpatterns = [
     url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/accounts/login'}),
 
 ]
+
+api_urls = [
+    url(r'^data/projetos/$', restapi_views.ProjetoApiView.as_view()),
+    url(r'^data/incentivadores/$', restapi_views.IncentivadorApiView.as_view()),
+    url(r'^data/proponentes/$', restapi_views.ProponenteApiView.as_view()),
+    url(r'^data/doacoes/$', restapi_views.DoacaoApiView.as_view()),
+]
+
+urlpatterns += api_urls
 
 if settings.DEBUG:
 	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

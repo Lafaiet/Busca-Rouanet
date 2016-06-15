@@ -3,8 +3,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
-
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field,Div, Fieldset, ButtonHolder
 from crispy_forms.bootstrap import (
@@ -87,8 +85,8 @@ class ProjetoForm(forms.Form):
                 Div('PRONAC', css_class='col-xs-2'),
                 Div('nome', css_class='col-xs-2'),
                 Div('ano_projeto', css_class='col-xs-2'),
-                Div('proponente', css_class='col-xs-2'),
-                Div('cgccpf', css_class='col-xs-2'),
+                Div('proponente', css_class='col-xs-3'),
+                Div('cgccpf', css_class='col-xs-3'),
                 Div('UF', css_class='col-xs-2'),
                 Div('municipio', css_class='col-xs-2'),
                 Div('area', css_class='col-xs-2'),
@@ -149,9 +147,9 @@ class ProponenteForm(forms.Form):
 
         self.helper.layout = Layout(
             Div(
-                Div('nome', css_class='col-xs-2'),
+                Div('nome', css_class='col-xs-3'),
                 Div('tipo_pessoa', css_class='col-xs-2   '),
-                Div('cgccpf', css_class='col-xs-2'),
+                Div('cgccpf', css_class='col-xs-3'),
                 Div('UF', css_class='col-xs-2   '),
                 Div('municipio', css_class='col-xs-3'),
 
@@ -182,9 +180,9 @@ class IncentivadorForm(forms.Form):
 
         self.helper.layout = Layout(
             Div(
-                Div('nome', css_class='col-xs-2'),
+                Div('nome', css_class='col-xs-3'),
                 Div('tipo_pessoa', css_class='col-xs-2   '),
-                Div('cgccpf', css_class='col-xs-2'),
+                Div('cgccpf', css_class='col-xs-3'),
                 Div('UF', css_class='col-xs-2   '),
                 Div('municipio', css_class='col-xs-3'),
 

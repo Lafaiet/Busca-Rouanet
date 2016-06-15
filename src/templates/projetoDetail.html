@@ -3,6 +3,10 @@
 {% load crispy_forms_tags %}
 
 
+{% block head %}
+  {% include "boottable_head.html" %}
+{% endblock%}
+
 {% block navbar %}
 
     {% include "nav.html" with active='projetos' %}
@@ -100,7 +104,7 @@
                 {% endautoescape %}
             </div>
         </div>
-       
+
 
 
     </div>

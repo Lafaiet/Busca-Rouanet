@@ -4,6 +4,10 @@
 {% load crispy_forms_tags %}
 
 
+{% block head %}
+  {% include "boottable_head.html" %}
+{% endblock%}
+
 {% block navbar %}
 
     {% include "nav.html" with active='proponentes' %}
@@ -24,7 +28,7 @@
 
     </div>
 
-    <button type="submit" class="btn btn-primary"> 
+    <button type="submit" class="btn btn-primary">
           <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
     </button>
 
@@ -36,11 +40,9 @@
     <div class="row placeholders">
 
       <p></p>
-        {% render_table table "custom_table.html" %}
-
-        {% include "download_section.html" with link=link %}
+        {% include "boottable.html" with table=table %}
     </div>
-   
+
 
 
 </div>
