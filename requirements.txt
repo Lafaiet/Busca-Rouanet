@@ -4,7 +4,6 @@ django-bootstrap3
 django-crontab
 requests
 xlwt
-psycopg2
 djangorestframework
 markdown
 django-filter
