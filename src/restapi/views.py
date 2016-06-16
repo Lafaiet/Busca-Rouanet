@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models.functions import Coalesce
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,7 +10,7 @@ from django.http import HttpResponse
 
 
 
-exclusion_fields = ['limit', 'offset', 'order', 'format', 'conclusao']
+exclusion_fields = ['limit', 'offset', 'order', 'format', 'conclusao', 'sort']
 
 class ProjetoApiView(APIView):
 
@@ -19,6 +20,8 @@ class ProjetoApiView(APIView):
 
         icontain_fields = ['municipio', 'proponente', 'nome']
         filter_args = {}
+        order_by = ['ano_projeto', 'PRONAC']
+        order_desc = True
 
         for param in query_params:
             if param != '':
@@ -33,6 +36,11 @@ class ProjetoApiView(APIView):
                             k='valor_captado'
                         v = 0
                     filter_args[k] = v
+                elif k == 'sort':
+                     order_by[0] = v
+                elif k == 'order' and v == 'asc':
+                    order_desc = False
+
 
         offset = int(request.GET.get('offset') or 0 )
         limit = int(request.GET.get('limit') or 100)+offset
@@ -40,14 +48,23 @@ class ProjetoApiView(APIView):
         if 'incentivador' in filter_args:
             incentivador = Incentivador.objects.filter(cgccpf=filter_args['incentivador'])[0]
 
-            projetos = incentivador.projetos.all()
+            projetos = incentivador.projetos.all().order_by(order_by)
 
         #projetos = ProjetoFilter(request.GET, queryset = Projeto.objects.values(*Projeto.basic_fields))
         else:
             projetos = Projeto.objects.filter(**filter_args).values(*Projeto.basic_fields)
         total = projetos.count()
 
+
+        if order_desc:
+            projetos = projetos.order_by(Coalesce(*order_by).desc())
+        else:
+            projetos = projetos.order_by(*order_by)
+
+
+
         projetos = projetos[offset:limit]
+
         return Response({'rows' : list(projetos), 'total' : total})
         #serialized = CustomSerializer(projetos, total)
         #return HttpResponse(serialized.data, content_type='application/json; charset=utf-8')
