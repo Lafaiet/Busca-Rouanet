@@ -7,7 +7,6 @@ from django.template import RequestContext
 from django.core import serializers
 from models import Projeto, Proponente, Incentivador
 from forms import ProjetoForm, ContactForm, ProponenteForm, IncentivadorForm
-from django_tables2 import RequestConfig
 import requests
 from datetime import datetime
 from django.conf import settings

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load render_table from django_tables2 %}
 {% load crispy_forms_tags %}
 
 
@@ -15,7 +14,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 <h1 class="page-header">Contato</h1>
 
-    
+
         <div class="row placeholders">
                 <form id="contact-form" method="post">
                 {% csrf_token %}
@@ -46,7 +45,7 @@
                 <textarea id="form_message" name="message" class="form-control" placeholder="Escreva sua mensagem *" rows="4" required="required"></textarea>
             </div>
             <div class="col-md-12">
-                <button type="submit" class="btn btn-success"> 
+                <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Enviar mensagem
                 </button>
             </div>
@@ -58,7 +57,7 @@
 
 </form>
 
-        </div>   
+        </div>
 
-    
+
 {% endblock %}

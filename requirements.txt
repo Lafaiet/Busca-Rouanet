@@ -1,9 +1,10 @@
 Django==1.9.2
 django-crispy-forms
-django_tables2
 django-bootstrap3
 django-crontab
 requests
-django_tables2_reports
 xlwt
 psycopg2
+djangorestframework
+markdown
+django-filter

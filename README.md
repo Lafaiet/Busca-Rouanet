@@ -1,8 +1,10 @@
 # Busca Rouanet
-[![HitCount](https://hitt.herokuapp.com/Lafaiet/Busca-Rouanet.svg)](https://github.com/{username||org}/{project-name})
- [![Gitter](https://badges.gitter.im/Lafaiet/Busca-Rouanet.svg)](https://gitter.im/Lafaiet/Busca-Rouanet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+[![Gitter](https://badges.gitter.im/Lafaiet/Busca-Rouanet.svg)](https://gitter.im/Lafaiet/Busca-Rouanet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Lafaiet/Busca-Rouanet/issues)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+[![Open Source Love](https://badges.frapsoft.com/os/gpl/gpl.svg?v=102)](http://www.gnu.org/licenses/gpl.html)
+
 
 
 Portal para buscas de dados referentes a Lei Rouanet.

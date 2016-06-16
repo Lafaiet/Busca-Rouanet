@@ -9,7 +9,7 @@ from django.http import HttpResponse
 
 
 
-exclusion_fields = ['limit', 'offset', 'order', 'format', 'captacao', 'conclusao']
+exclusion_fields = ['limit', 'offset', 'order', 'format', 'conclusao']
 
 class ProjetoApiView(APIView):
 
@@ -26,6 +26,12 @@ class ProjetoApiView(APIView):
                 if k not in exclusion_fields:
                     if k in icontain_fields:
                         k+='__icontains'
+                    elif k == 'captacao':
+                        if v == 'comcaptacoes':
+                            k='valor_captado__gt'
+                        else:
+                            k='valor_captado'
+                        v = 0
                     filter_args[k] = v
 
         offset = int(request.GET.get('offset') or 0 )
@@ -35,7 +41,7 @@ class ProjetoApiView(APIView):
             incentivador = Incentivador.objects.filter(cgccpf=filter_args['incentivador'])[0]
 
             projetos = incentivador.projetos.all()
-            
+
         #projetos = ProjetoFilter(request.GET, queryset = Projeto.objects.values(*Projeto.basic_fields))
         else:
             projetos = Projeto.objects.filter(**filter_args).values(*Projeto.basic_fields)

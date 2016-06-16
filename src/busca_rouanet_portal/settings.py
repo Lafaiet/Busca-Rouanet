@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'busca_rouanet',
-    'django_tables2',
     'bootstrap3',
     'django_crontab',
     'restapi',
