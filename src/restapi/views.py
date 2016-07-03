@@ -9,7 +9,6 @@ from filters import ProjetoFilter
 from django.http import HttpResponse
 
 
-
 exclusion_fields = ['limit', 'offset', 'order', 'format', 'conclusao', 'sort']
 
 class ProjetoApiView(APIView):
@@ -48,11 +47,13 @@ class ProjetoApiView(APIView):
         if 'incentivador' in filter_args:
             incentivador = Incentivador.objects.filter(cgccpf=filter_args['incentivador'])[0]
 
-            projetos = incentivador.projetos.all().order_by(order_by)
+            #projetos = incentivador.projetos.all().order_by(order_by)
+            projetos = incentivador.projetos.all()
 
         #projetos = ProjetoFilter(request.GET, queryset = Projeto.objects.values(*Projeto.basic_fields))
         else:
             projetos = Projeto.objects.filter(**filter_args).values(*Projeto.basic_fields)
+
         total = projetos.count()
 
 
@@ -62,10 +63,11 @@ class ProjetoApiView(APIView):
             projetos = projetos.order_by(*order_by)
 
 
-
         projetos = projetos[offset:limit]
 
-        return Response({'rows' : list(projetos), 'total' : total})
+        projetos_serialized = CustomSerializer(projetos)
+
+        return Response({'rows' : projetos_serialized.data, 'total' : total})
         #serialized = CustomSerializer(projetos, total)
         #return HttpResponse(serialized.data, content_type='application/json; charset=utf-8')
 
@@ -92,9 +94,9 @@ class ProponenteApiView(APIView):
         proponentes = Proponente.objects.filter(**filter_args).values(*Proponente.basic_fields)
         total = proponentes.count()
         proponentes = proponentes[offset:limit]
-        serialized = CustomSerializer(proponentes, total)
-        #return Response(serializer.data)
-        return HttpResponse(serialized.data, content_type='application/json; charset=utf-8')
+        proponentes_serialized = CustomSerializer(proponentes)
+
+        return Response({'rows' : proponentes_serialized.data, 'total' : total})
 
 class IncentivadorApiView(APIView):
 
@@ -119,9 +121,9 @@ class IncentivadorApiView(APIView):
         incentivadores = Incentivador.objects.filter(**filter_args).values(*Incentivador.basic_fields)
         total = incentivadores.count()
         incentivadores = incentivadores[offset:limit]
-        serialized = CustomSerializer(incentivadores, total)
-        #return Response(serializer.data)
-        return HttpResponse(serialized.data, content_type='application/json; charset=utf-8')
+        incentivadores_serialized = CustomSerializer(incentivadores)
+
+        return Response({'rows' : incentivadores_serialized.data, 'total' : total})
 
 class DoacaoApiView(APIView):
 

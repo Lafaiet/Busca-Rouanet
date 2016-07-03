@@ -3,8 +3,12 @@
 
 
 {% block head%}
-<script src="http://www.d3plus.org/js/d3.js"></script>
-<script src="http://www.d3plus.org/js/d3plus.js"></script>
+
+<link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.5.1.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdn.oesmith.co.uk/morris-0.5.1.min.js"></script>
+
 {% endblock %}
 
 
@@ -15,62 +19,164 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="col-sm-9 col-sm-offset-20 col-md-10 col-md-offset-2 main">
 
 <h1 class="page-header">Estatísticas</h1>
 
+<div class="container-fluid">
 
-<div id="exports"></div>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-body">
 
-<script>
-  // sample data array
-  var trade_data = [
-    {"usd": 34590873460, "product": "SP"},
-    {"usd": 12897429187, "product": "RJ"},
-    {"usd": 8974520985, "product": "RS "},
-    {"usd": 9872342, "product": "MG"},
-    {"usd": 6897234098, "product": "SC"},
-    {"usd": 590834587, "product": "DF"},
-    {"usd": 987234261, "product": "GO"}
+    <div class="col-lg-6">
+
+      <div id="chart1"></div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+      <div id="chart2"></div>
+
+    </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div id="chart3"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <div id="donut1"></div>
+    </div>
+
+    <div class="col-lg-4">
+      <div id="donut2"></div>
+    </div>
+
+    <div class="col-lg-4">
+      <div id="donut3"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div id='bars'></div>
+  </div>
+  </div>
+
+  <script>
+  new Morris.Line({
+    // ID of the element in which to draw the chart.
+    element: 'chart1',
+    // Chart data records -- each entry in this array corresponds to a point on
+    // the chart.
+    data: [
+      { year: '2008', value: 20 },
+      { year: '2009', value: 10 },
+      { year: '2010', value: 5 },
+      { year: '2011', value: 5 },
+      { year: '2012', value: 20 }
+    ],
+    // The name of the data record attribute that contains x-values.
+    xkey: 'year',
+    // A list of names of data record attributes that contain y-values.
+    ykeys: ['value'],
+    // Labels for the ykeys -- will be displayed when you hover over the
+    // chart.
+    labels: ['Value']
+  });
+
+  new Morris.Line({
+    // ID of the element in which to draw the chart.
+    element: 'chart2',
+    // Chart data records -- each entry in this array corresponds to a point on
+    // the chart.
+    data: [
+      { year: '2010', value: 4 },
+      { year: '2011', value: 7 },
+      { year: '2012', value: 88 },
+      { year: '2013', value: 90 },
+      { year: '2014', value: 120 }
+    ],
+    // The name of the data record attribute that contains x-values.
+    xkey: 'year',
+    // A list of names of data record attributes that contain y-values.
+    ykeys: ['value'],
+    // Labels for the ykeys -- will be displayed when you hover over the
+    // chart.
+    labels: ['Value']
+  });
+
+  Morris.Area({
+  element: 'chart3',
+  data: [
+    { y: '2006', a: 100, b: 90 },
+    { y: '2007', a: 75,  b: 65 },
+    { y: '2008', a: 50,  b: 40 },
+    { y: '2009', a: 75,  b: 65 },
+    { y: '2010', a: 50,  b: 40 },
+    { y: '2011', a: 75,  b: 65 },
+    { y: '2012', a: 100, b: 90 }
+  ],
+  xkey: 'y',
+  ykeys: ['a', 'b'],
+  labels: ['Series A', 'Series B']
+});
+
+Morris.Donut({
+  element: 'donut1',
+  data: [
+    {label: "São Paulo", value: 50},
+    {label: "Rio de Janeiro", value: 40},
+    {label: "Espírito Santo", value: 10}
   ]
-  // instantiate d3plus
-  var visualization = d3plus.viz()
-    .container("#exports")
-    .data(trade_data)
-    .type("tree_map")
-    .id("product")
-    .size("usd")
-    .labels({"align": "left", "valign": "top"})
-    .draw()
-</script>
+});
 
-
-<div id="viz"></div>
-
-<script>
-
-  var data = [
-    {"value": 100, "name": "Danca"},
-    {"value": 70, "name": "Teatro"},
-    {"value": 40, "name": "Musica"},
-    {"value": 15, "name": "Poesia"},
-    {"value": 5, "name": "Livro"},
-    {"value": 1, "name": "Show"}
+Morris.Donut({
+  element: 'donut2',
+  data: [
+    {label: "Goiás", value: 40},
+    {label: "Minas Gerais", value: 50},
+    {label: "Mato Grosso", value: 10}
   ]
+});
 
-  d3plus.viz()
-    .container("#viz")
-    .data(data)
-    .type("pie")
-    .id("name")
-    .size("value")
-    .draw()
+Morris.Donut({
+  element: 'donut3',
+  data: [
+    {label: "Rio Grande do Sul", value: 30},
+    {label: "Paraná", value: 10},
+    {label: "Santa Catarina", value: 60}
+  ]
+});
 
-</script>
+Morris.Bar({
+  element: 'bars',
+  data: [
+    { y: '2010', a: 100, b: 90 },
+    { y: '2011', a: 75,  b: 65 },
+    { y: '2012', a: 50,  b: 40 },
+    { y: '2013', a: 75,  b: 65 },
+    { y: '2014', a: 50,  b: 40 },
+    { y: '2015', a: 75,  b: 65 },
+    { y: '2016', a: 100, b: 90 }
+  ],
+  xkey: 'y',
+  ykeys: ['a', 'b'],
+  labels: ['Público', 'Privado']
+});
 
-
+  </script>
 
 </div>
 
+</div>
 
 {% endblock %}

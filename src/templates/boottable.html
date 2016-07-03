@@ -1,5 +1,8 @@
 
-      <div class="row placeholders">
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-md-3">
 
         <div id="toolbar">
             <select class="form-control">
@@ -8,6 +11,13 @@
                 <option value="selected">Exportar Selecionados</option>
             </select>
         </div>
+
+        </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
 
         <table id="{{table.table_id}}"
                data-toggle= {{ table.toggle }}
@@ -42,6 +52,9 @@
             </tr>
             </thead>
         </table>
+        </div>
+        </div>
+
     </div>
 
 <script>
